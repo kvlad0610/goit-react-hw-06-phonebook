@@ -3,7 +3,7 @@ import types from './types';
 const local = JSON.parse(localStorage.getItem('contacts'));
 
 const initialState = {
-  contacts: [...local],
+  contacts: [],
   value: '',
 };
 
