@@ -1,7 +1,9 @@
 import types from './types';
 
+const local = JSON.parse(localStorage.getItem('contacts'));
+
 const initialState = {
-  contacts: JSON.parse(localStorage.getItem('contacts')),
+  contacts: [...local],
   value: '',
 };
 
