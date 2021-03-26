@@ -1,11 +1,18 @@
 import types from './types';
 
-const local = JSON.parse(localStorage.getItem('contacts'));
+const local = () => {
+  if (localStorage.contacts) {
+    return JSON.parse(localStorage.getItem('contacts'));
+  }
+  return [];
+};
 
 const initialState = {
-  contacts: [],
+  contacts: local(),
   value: '',
 };
+
+console.log(local());
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
