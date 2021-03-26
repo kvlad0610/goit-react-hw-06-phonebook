@@ -1,19 +1,28 @@
 import types from './types';
 
-const contacts = JSON.parse(localStorage.getItem('contacts'));
+const initialState = {
+  contacts: JSON.parse(localStorage.getItem('contacts')),
+  value: '',
+};
 
-const reducer = (state = contacts, action) => {
+const reducer = (state = initialState, action) => {
   switch (action.type) {
     case types.CONTACT_ADD:
-      return [...state, action.payload];
+      return { ...state, contacts: [...state.contacts, action.payload] };
 
     case types.CONTACT_DELETE:
-      return state.filter(contact => contact.id !== action.payload);
+      return {
+        ...state,
+        contacts: state.contacts.filter(
+          contact => contact.id !== action.payload,
+        ),
+      };
 
     case types.CONTACT_FILTER:
-      return state.filter(contact =>
-        contact.name.toLowerCase().includes(action.payload.toLowerCase()),
-      );
+      return {
+        ...state,
+        value: action.payload,
+      };
 
     default:
       return state;

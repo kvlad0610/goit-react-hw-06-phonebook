@@ -1,21 +1,23 @@
 import { label, input } from './Filter.module.css';
-import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { filterContactAction } from '../../../reducer/contact/actions';
 
 export default function Filter() {
-  const [filter, setFilter] = useState('');
+  const contacts = useSelector(state => state.contact.contacts);
+  const dispatch = useDispatch();
 
   function onChange(e) {
-    setFilter(e.currentTarget.value);
+    return dispatch(filterContactAction(e.currentTarget.value));
   }
 
-  // const visibleContacts = contacts.filter(contact =>
-  //   contact.name.toLowerCase().includes(filter.toLowerCase()),
-  // );
-
   return (
-    <label className={label}>
-      Find contacts by name <br />
-      <input className={input} type="text" value={filter} onChange={onChange} />
-    </label>
+    <>
+      {contacts.length > 0 && (
+        <label className={label}>
+          Find contacts by name <br />
+          <input className={input} type="text" onChange={onChange} />
+        </label>
+      )}
+    </>
   );
 }

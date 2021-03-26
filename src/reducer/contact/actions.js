@@ -10,7 +10,7 @@ export const deleteContactAction = id => ({
   payload: id,
 });
 
-export const filterContact = event => ({
+export const filterContactAction = event => ({
   type: types.CONTACT_FILTER,
   payload: event,
 });
