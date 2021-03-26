@@ -1,6 +1,6 @@
 import { item, button } from './ContactList.module.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { deleteContactAction } from '../../../reducer/contact/actions';
+import { deleteContactAction } from '../../../reducer/contacts/actions';
 import { useEffect } from 'react';
 
 export default function ContactList() {
