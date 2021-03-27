@@ -1,4 +1,6 @@
-import types from './types';
+import { createReducer, combineReducers } from '@reduxjs/toolkit';
+import * as actions from './actions';
+// import types from './types';
 
 const local = () => {
   if (localStorage.contacts) {
@@ -9,33 +11,50 @@ const local = () => {
 
 const initialState = {
   contacts: local(),
-  value: '',
+  filter: '',
 };
 
-console.log(local());
+const addContact = (state, action) => [...state, action.payload];
 
-const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case types.CONTACT_ADD:
-      return { ...state, contacts: [...state.contacts, action.payload] };
+const deleteContact = (state, action) =>
+  state.filter(contact => contact.id !== action.payload);
 
-    case types.CONTACT_DELETE:
-      return {
-        ...state,
-        contacts: state.contacts.filter(
-          contact => contact.id !== action.payload,
-        ),
-      };
+const contacts = createReducer(initialState.contacts, {
+  [actions.addContactAction.type]: addContact,
+  [actions.deleteContactAction.type]: deleteContact,
+});
 
-    case types.CONTACT_FILTER:
-      return {
-        ...state,
-        value: action.payload,
-      };
+const filter = createReducer(initialState.filter, {
+  [actions.filterContactAction.type]: (_, action) => action.payload,
+});
 
-    default:
-      return state;
-  }
-};
+export default combineReducers({
+  contacts,
+  filter,
+});
 
-export default reducer;
+// const reducer = (state = initialState, action) => {
+//   switch (action.type) {
+//     case types.CONTACT_ADD:
+//       return { ...state, contacts: [...state.contacts, action.payload] };
+
+//     case types.CONTACT_DELETE:
+//       return {
+//         ...state,
+//         contacts: state.contacts.filter(
+//           contact => contact.id !== action.payload,
+//         ),
+//       };
+
+//     case types.CONTACT_FILTER:
+//       return {
+//         ...state,
+//         value: action.payload,
+//       };
+
+//     default:
+//       return state;
+//   }
+// };
+
+// export default reducer;

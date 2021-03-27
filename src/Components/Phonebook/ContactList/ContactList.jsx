@@ -1,19 +1,34 @@
-import { item, button } from './ContactList.module.css';
+import { item } from './ContactList.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteContactAction } from '../../../reducer/contacts/actions';
 import { useEffect } from 'react';
+// import { IconButton } from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
+// import { makeStyles } from '@material-ui/core/styles';
+import DeleteIcon from '@material-ui/icons/Delete';
+
+// const useStyles = makeStyles(theme => ({
+//   margin: {
+//     margin: theme.spacing(1),
+//   },
+//   extendedIcon: {
+//     marginRight: theme.spacing(1),
+//   },
+// }));
 
 export default function ContactList() {
   const dispatch = useDispatch();
-  const contacts = useSelector(state => state.contact.contacts);
-  const value = useSelector(state => state.contact.value);
+  const contacts = useSelector(state => state.contacts.contacts);
+  const filter = useSelector(state => state.contacts.filter);
+
+  // const classes = useStyles();
 
   function deleteContact(contactId) {
     return dispatch(deleteContactAction(contactId));
   }
 
   const visibleContacts = contacts.filter(contact =>
-    contact.name.toLowerCase().includes(value.toLowerCase()),
+    contact.name.toLowerCase().includes(filter.toLowerCase()),
   );
 
   useEffect(() => {
@@ -21,7 +36,7 @@ export default function ContactList() {
   }, [contacts]);
 
   console.log(contacts);
-  console.log(value);
+  console.log(filter);
 
   return (
     <>
@@ -29,13 +44,20 @@ export default function ContactList() {
         {visibleContacts.map(({ id, name, number }) => (
           <li className={item} key={id}>
             {name}:{number}
-            <button
+            {/* <button
               className={button}
               type="button"
               onClick={() => deleteContact(id)}
             >
               Delete
-            </button>
+            </button> */}
+            <IconButton
+              aria-label="delete"
+              // className={classes.margin}
+              onClick={() => deleteContact(id)}
+            >
+              <DeleteIcon />
+            </IconButton>
           </li>
         ))}
       </ul>

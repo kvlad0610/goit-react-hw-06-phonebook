@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { filterContactAction } from '../../../reducer/contacts/actions';
 
 export default function Filter() {
-  const contacts = useSelector(state => state.contact.contacts);
+  const contacts = useSelector(state => state.contacts.contacts);
   const dispatch = useDispatch();
 
   function onChange(e) {
